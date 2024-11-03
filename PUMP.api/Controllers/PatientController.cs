@@ -17,7 +17,7 @@ public class PatientController : ControllerBase
         _patient = patient;
     }
 
-    [Authorize(Policy = "General")]
+    //[Authorize(Policy = "General")]//
     [HttpPost]
     public async Task<IActionResult> CreatePatient([FromBody] Patient patient)
     {
@@ -30,9 +30,9 @@ public class PatientController : ControllerBase
         return Ok(result);
     }
 
-    [Authorize(Policy = "General")]
+    //[Authorize(Policy = "General")]//
     [HttpGet]
-    public async Task<IActionResult> ReadMembers(int? id)
+    public async Task<IActionResult> ReadPatient(int? id)
     {
         var result = await this._patient.Read(id);
         if (result == null)
@@ -42,7 +42,7 @@ public class PatientController : ControllerBase
         return Ok(result);
     }
 
-    [Authorize(Policy = "General")]
+    //[Authorize(Policy = "General")]//
     [HttpPut]
     public async Task<IActionResult> UpdatePatient([FromBody] Patient patient)
     {
@@ -55,7 +55,7 @@ public class PatientController : ControllerBase
         return Ok(result);
     }
 
-    [Authorize(Policy = "Administrator")]
+    //[Authorize(Policy = "Administrator")]//
     [HttpDelete]
     public async Task<IActionResult> DeletePatient(int? id)
     {

@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PUMP.core.BL.Interfaces;
 using PUMP.models;
@@ -6,21 +6,21 @@ using PUMP.models;
 namespace PUMP.api.Controllers;
 
 [ApiController]
-[Route("v1/doctor")]
-public class DoctorController : ControllerBase
+[Route("v1/measurement")]
+public class MeasurementController : ControllerBase
 {
-    private readonly IDoctor _doctor;
+    private readonly IMeasurement _measurement;
 
-    public DoctorController(IDoctor doctor)
+    public MeasurementController(IMeasurement measurement)
     {
-        _doctor = doctor;
+        _measurement = measurement;
     }
 
     // [Authorize(Policy = "General")] //
     [HttpPost]
-    public async Task<IActionResult> CreateDoctor([FromBody] Doctor doctor)
+    public async Task<IActionResult> CreateMeasurement([FromBody] Measurement measurement)
     {
-        var result = await this._doctor.Create(doctor);
+        var result = await this._measurement.Create(measurement);
         if (!result)
         {
             return BadRequest(result);
@@ -31,9 +31,9 @@ public class DoctorController : ControllerBase
 
     // [Authorize(Policy = "General")] //
     [HttpGet]
-    public async Task<IActionResult> ReadDoctor(int? id)
+    public async Task<IActionResult> ReadMeasurement(int? id)
     {
-        var result = await this._doctor.Read(id);
+        var result = await this._measurement.Read(id);
         if (result == null)
         {
             return BadRequest(result);
@@ -43,9 +43,9 @@ public class DoctorController : ControllerBase
 
     //[Authorize(Policy = "General")]//
     [HttpPut]
-    public async Task<IActionResult> UpdateDoctor([FromBody] Doctor doctor)
+    public async Task<IActionResult> UpdateMeasurement([FromBody] Measurement measurement)
     {
-        var result = await this._doctor.Update(doctor);
+        var result = await this._measurement.Update(measurement);
         if (!result)
         {
             return BadRequest(result);
@@ -56,9 +56,9 @@ public class DoctorController : ControllerBase
 
     //[Authorize(Policy = "Administrator")]//
     [HttpDelete]
-    public async Task<IActionResult> DeleteDoctor(int? id)
+    public async Task<IActionResult> DeleteMeasurement(int? id)
     {
-        var result = await this._doctor.Delete(id);
+        var result = await this._measurement.Delete(id);
         if (!result)
         {
             return BadRequest(result);

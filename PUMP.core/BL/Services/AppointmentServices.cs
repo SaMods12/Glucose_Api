@@ -1,31 +1,31 @@
-using PUMP.core.BL.Interfaces;
+﻿using PUMP.core.BL.Interfaces;
 using PUMP.models;
 
 namespace PUMP.core.BL.Services;
 
-public class DoctorServices : IDoctor
+public class AppointmentServices : IAppointment
 {
-    public Task<bool> Create(Doctor doctor)
+    public Task<bool> Create(Appointment appointment)
     {
         bool result = false;
 
         using (var connection = new data.SQLServer.InitDb())
         {
             var query = (
-                from item in connection.Doctor
-                where item.Id == doctor.Id
+                from item in connection.Appointment
+                where item.Id == appointment.Id
                 select item
             ).FirstOrDefault();
             if (query == null)
             {
-                Doctor doc = new Doctor();
-                doc.Id = doctor.Id;
-                doc.Name = doctor.Name;
-                doc.Lastname = doctor.Lastname;
-                //doc.PatientId = doctor.PatientId;//
-                doc.Phone = doctor.Phone;
-                doc.Address = doctor.Address;
-                connection.Doctor.Add(doc);
+                Appointment newAppointment = new Appointment
+                {
+                    Id = appointment.Id,
+                    AppointmentDate = appointment.AppointmentDate,
+                    PatientId = appointment.PatientId,
+                    DoctorId = appointment.DoctorId
+                };
+                connection.Appointment.Add(newAppointment);
                 result = connection.SaveChanges() > 0;
             }
         }
@@ -39,16 +39,14 @@ public class DoctorServices : IDoctor
         {
             if (id.HasValue)
             {
-                var query = (from item in connection.Doctor
+                var query = (from item in connection.Appointment
                              where item.Id == id.Value
                              select new
                              {
                                  item.Id,
-                                 item.Name,
-                                 item.Lastname,
-                                // item.PatientId,//
-                                 item.Phone,
-                                 item.Address
+                                 item.AppointmentDate,
+                                 item.PatientId,
+                                 item.DoctorId
                              }).FirstOrDefault();
                 return Task.FromResult<object?>(query);
             }
@@ -56,15 +54,13 @@ public class DoctorServices : IDoctor
             if (id == null)
             {
                 var query = (
-                    from item in connection.Doctor
+                    from item in connection.Appointment
                     select new
                     {
                         item.Id,
-                        item.Name,
-                        item.Lastname,
-                      //  item.PatientId,//
-                        item.Phone,
-                        item.Address
+                        item.AppointmentDate,
+                        item.PatientId,
+                        item.DoctorId
                     }).ToList();
 
                 return Task.FromResult<object?>(query);
@@ -76,25 +72,22 @@ public class DoctorServices : IDoctor
         }
     }
 
-    public Task<bool> Update(Doctor doctor)
+    public Task<bool> Update(Appointment appointment)
     {
         bool result = false;
         using (var connection = new data.SQLServer.InitDb())
         {
             var query = (
-                from item in connection.Doctor
-                where item.Id == doctor.Id
+                from item in connection.Appointment
+                where item.Id == appointment.Id
                 select item
             ).FirstOrDefault();
 
             if (query != null)
             {
-                query.Id = doctor.Id;
-                query.Name = doctor.Name;
-                query.Lastname = doctor.Lastname;
-              //  query.PatientId = doctor.PatientId;//
-                query.Phone = doctor.Phone;
-                query.Address = doctor.Address;
+                query.AppointmentDate = appointment.AppointmentDate;
+                query.PatientId = appointment.PatientId;
+                query.DoctorId = appointment.DoctorId;
                 result = connection.SaveChanges() > 0;
             }
         }
@@ -108,14 +101,14 @@ public class DoctorServices : IDoctor
         using (var connection = new data.SQLServer.InitDb())
         {
             var query = (
-                from item in connection.Doctor
+                from item in connection.Appointment
                 where item.Id == id.Value
                 select item
             ).FirstOrDefault();
 
             if (query != null)
             {
-                connection.Doctor.Remove(query);
+                connection.Appointment.Remove(query);
                 result = connection.SaveChanges() > 0;
             }
         }

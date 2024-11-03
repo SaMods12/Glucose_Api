@@ -25,11 +25,9 @@ public class PatientServices : IPatient
                 pat.Age = patient.Age;
                 pat.Mail = patient.Mail;
                 pat.Password = patient.Password;
-                pat.Doctor = patient.Doctor;
-                pat.Appointment = patient.Appointment;
-                pat.Measurement = patient.Measurement;
+                pat.DoctorId = patient.DoctorId;
                 pat.Phone = patient.Phone;
-                pat.Addreess = patient.Addreess;
+                pat.Address = patient.Address;
                 connection.Patient.Add(pat);
                 result = connection.SaveChanges() > 0;
             }
@@ -54,11 +52,9 @@ public class PatientServices : IPatient
                         item.Age,
                         item.Mail,
                         item.Password,
-                        item.Doctor,
-                        item.Appointment,
-                        item.Measurement,
+                        item.DoctorId,
                         item.Phone,
-                        item.Addreess
+                        item.Address
                     }).FirstOrDefault();
                 return Task.FromResult<object?>(query);
             }
@@ -75,11 +71,9 @@ public class PatientServices : IPatient
                         item.Age,
                         item.Mail,
                         item.Password,
-                        item.Doctor,
-                        item.Appointment,
-                        item.Measurement,
+                        item.DoctorId,
                         item.Phone,
-                        item.Addreess
+                        item.Address
                     }).ToList();
                 
                 return Task.FromResult<object?>(query);
@@ -110,11 +104,9 @@ public class PatientServices : IPatient
                 query.Age = patient.Age;
                 query.Mail = patient.Mail;
                 query.Password = patient.Password;
-                query.Doctor = patient.Doctor;
-                query.Appointment = patient.Appointment;
-                query.Measurement = patient.Measurement;
+                query.DoctorId = patient.DoctorId;
                 query.Phone = patient.Phone;
-                query.Addreess = patient.Addreess;
+                query.Address = patient.Address;
                 result = connection.SaveChanges() > 0;
             }
         }

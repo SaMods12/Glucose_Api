@@ -87,6 +87,8 @@ Settings.ConnectionString = builder.Configuration.GetConnectionString("path");
 builder.Services.AddTransient<IPatient, PatientServices>();
 builder.Services.AddTransient<IDoctor, DoctorServices>();
 builder.Services.AddTransient<IAuth, AuthServices>();
+builder.Services.AddTransient<IAppointment, AppointmentServices>();
+builder.Services.AddTransient<IMeasurement, MeasurementServices>();
 
 
 var app = builder.Build();

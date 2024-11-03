@@ -11,8 +11,9 @@ public class InitDb : DbContext
     public virtual DbSet<Users> Users { get; set; }
 
     public virtual DbSet<Doctor> Doctor { get; set; }
-
     public virtual DbSet<Patient> Patient { get; set; }
+    public virtual DbSet<Measurement> Measurement { get; set; }
+    public virtual DbSet<Appointment> Appointment { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
